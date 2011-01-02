@@ -1,0 +1,111 @@
+# cd
+alias ..='cd ..'
+
+# ls
+alias ls="ls -F"
+alias l="ls -lAh"
+alias ll="ls -l"
+alias la='ls -A'
+
+alias mvim="open -a /Applications/MacVim.app"
+
+# git
+alias gl='git pull'
+alias gp='git push'
+alias gd='git diff'
+alias gc='git commit'
+alias gca='git commit -a'
+alias gco='git checkout'
+alias gb='git branch'
+alias gs='git status'
+alias grm="git status | grep deleted | awk '{print \$3}' | xargs git rm"
+alias gh='git push heroku master'
+alias hl='heroku logs'
+
+# rails
+alias sc='script/console'
+alias ss='script/server'
+alias sg='script/generate'
+alias a='autotest -rails'
+alias tlog='tail -f log/development.log'
+alias scaffold='script/generate nifty_scaffold'
+alias migrate='rake db:migrate db:test:clone'
+alias rst='touch tmp/restart.txt'
+
+# commands starting with % for pasting from web
+alias %=' '
+
+alias lo='logout'
+
+alias sst='svn status'
+alias scm='svn commit -m'
+alias su='svn update'
+
+alias ga='git add'
+alias gb='git branch'
+alias gba='git branch -a'
+alias gc='git commit -v -a'
+alias gca='git commit -v -a'
+alias gd='git diff'
+alias gko='git checkout'
+alias gl='git pull'
+alias glr='git pull --rebase'
+alias glv='git pull -v'
+alias gp='git push'
+alias gpv='git push -v'
+alias gs='git stash'
+alias gst='git status'
+function m() {
+  if [ -x "./script/rails" ]; then
+    ps -eaf | grep ./script/rails | grep ruby | awk '{print $2}' | xargs kill
+    ./script/rails server -d 
+  else
+    ps -eaf | grep ./script/server | grep ruby | awk '{print $2}' | xargs kill -9
+    ps -eaf | grep tail | grep development.log | grep ruby | awk '{print $2}' | xargs kill
+    ./script/server &
+    tail -f log/development.log &
+  fi
+}
+function erb_to_haml() {
+        mmv '*.html.erb' '#1.haml'
+}
+
+alias rdb='[ -x ./script/reset-db.sh ] && ./script/reset-db.sh'
+alias rdbt='env RAILS_ENV=test ./script/reset-db.sh'
+alias rsc='rake db:sessions:clear'
+alias rdm='rake db:migrate'
+alias rdmt='env RAILS_ENV=test rake db:migrate'
+alias rr='rake routes'
+alias rdmr='rake db:migrate:reset db:seed'
+alias rdmrt='env RAILS_ENV=test rake db:migrate:reset db:seed'
+alias rv='rake rcov:all'
+alias rvc='rake rcov:cucumber'
+alias rvs='rake rcov:rspec'
+
+alias ds='~/code/OpenDS-2.2.0/bin/dsconfig -h localhost -p 4444 -D cn="Directory Manager" -w vobnem --trustAll'
+
+# change default keychains
+
+function setkeychain() {
+  /usr/bin/security default-keychain -s "$CURRENT_KEYCHAIN"
+  #/usr/bin/security unlock-keychain "$CURRENT_KEYCHAIN"
+}
+
+function krubyful() {
+  export CURRENT_KEYCHAIN="/Users/greghaygood/Library/Keychains/rubyful.keychain";
+  setkeychain;
+  (sleep 3600; kdefault) &
+}
+
+function kwikid() {
+  export CURRENT_KEYCHAIN="/Users/greghaygood/Library/Keychains/wikid.keychain";
+  setkeychain;
+  (sleep 3600; kdefault) &
+}
+
+function kdefault() {
+  export CURRENT_KEYCHAIN="/Users/greghaygood/Library/Keychains/login.keychain";
+  setkeychain;
+}
+
+

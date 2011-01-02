@@ -1,0 +1,2 @@
+hg prompt --angle-brackets "[hg:<branch>/<tags|, >]" 2>/dev/null
+
